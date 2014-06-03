@@ -3,7 +3,7 @@
 #include <iostream> 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
 	WSADATA wsaData;
 	int ret = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -44,6 +44,18 @@ int main()
 
 			// Print address on the prompt.
 			std::cout << "Client Connected: " << inet_ntoa(clientAddress.sin_addr) << endl;
+
+			// Receive Data
+			char buffer[1];
+			if (recv(clientReceivedSocket, buffer, 1, 0))
+			{
+				std::cout << "Character received: " << buffer[0] << endl;
+				buffer[0] = toupper(buffer[0]);
+
+				// Send Character back
+				int result = send(clientReceivedSocket, buffer, 1, NULL);
+				std::cout << "Character sent: " << buffer[0] << endl;
+			}
 		}
 
 		closesocket(mainSocket);
