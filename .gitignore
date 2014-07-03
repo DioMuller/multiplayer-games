@@ -22,3 +22,5 @@
 
 *Debug*
 *Release*
+/src/EchoServer/*.suo
+/src/EchoServer/*.sdf
