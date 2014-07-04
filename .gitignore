@@ -24,3 +24,4 @@
 *Release*
 /src/EchoServer/*.suo
 /src/EchoServer/*.sdf
+/src/EchoServer/*.opensdf
