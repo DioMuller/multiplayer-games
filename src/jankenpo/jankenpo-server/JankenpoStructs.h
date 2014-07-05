@@ -2,9 +2,16 @@
 
 enum RPSValue
 {
-	ROCK,
-	PAPER,
-	SCISSORS
+	ROCK = 1,
+	PAPER = 2,
+	SCISSORS = 3
+};
+
+enum DuelResult
+{
+	WIN = 1,
+	LOSE = 2,
+	DRAW = 3
 };
 
 enum MessageType

@@ -52,12 +52,31 @@ int main(int argc, char* argv[])
 		}
 
 		// Get Data.
+		int value = 0;
 
-		// Send Data.
+		while ( value <= 0 || value > 3)
+		{
+			std::cout << "Select your weapon!" << std::endl;
+			std::cout << "1 - Rock" << std::endl;
+			std::cout << "2 - Paper" << std::endl;
+			std::cout << "3 - Scissors" << std::endl;
+			std::cin >> value;
 
-		// Wait Response.
+			if (value <= 0 || value > 3)
+			{
+				std::cout << "Invalid input." << std::endl;
+				system("pause");
+			}
+			else
+			{ 
+				// Send Data.
 
-		// Print Response.
+				// Wait Response.
+
+				// Print Response.
+			}
+		}
+
 	}
 
 	// Finalize WSA.
