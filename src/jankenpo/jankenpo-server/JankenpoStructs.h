@@ -1,10 +1,13 @@
 #pragma once
 
+#define MESSAGE_SIZE 512
+
 enum RPSValue
 {
-	ROCK = 1,
-	PAPER = 2,
-	SCISSORS = 3
+	NONE = -1,
+	ROCK = 0,
+	PAPER = 1,
+	SCISSORS = 2
 };
 
 enum DuelResult
@@ -16,23 +19,30 @@ enum DuelResult
 
 enum MessageType
 {
-	MESSAGE_AUTH_REQUEST,
-	MESSAGE_AUTH_RESPONSE
+	MESSAGE_RPS_CONNECT = 0,
+	MESSAGE_RPS_REQUEST = 1,
+	MESSAGE_RPS_PLAY = 2,
+	MESSAGE_RPS_RESULT = 3
 };
 
-struct MessageHeader
+struct MessageRPSConnect
 {
-	MessageType type;
+	MessageType type = MessageType::MESSAGE_RPS_CONNECT;
 };
 
-struct MessageAuthRequest
+struct MessageRPSRequest
 {
-	MessageHeader header;
+	MessageType type = MessageType::MESSAGE_RPS_REQUEST;
+};
+
+struct MessageRPSPlay
+{
+	MessageType type = MessageType::MESSAGE_RPS_PLAY;
 	RPSValue value;
 };
 
-struct MessageAuthResponse
+struct MessageRPSResult
 {
-	MessageHeader header;
-	bool winner;
+	MessageType type = MessageType::MESSAGE_RPS_RESULT;
+	DuelResult winner;
 };

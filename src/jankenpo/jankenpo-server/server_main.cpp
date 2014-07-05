@@ -2,10 +2,10 @@
 
 #include <iostream> 
 #include <WinSock2.h>
+#include <thread>
 #include "JankenpoStructs.h"
 
-#define MESSAGE_SIZE 512
-#define PLAYER_COUNT 4
+#define PLAYER_COUNT 2
 
 RPSValue values[PLAYER_COUNT];
 
@@ -14,6 +14,15 @@ void runThread(int id);
 
 int main(int argc, char* argv[])
 {
+	while (true)
+	{
+		std::thread th1(runThread, 0);
+		std::thread th2(runThread, 1);
+
+		th1.join();
+		th2.join();
+	}
+
 	return 0;
 }
 
@@ -61,7 +70,24 @@ void runThread(int id)
 			return;
 		}
 
-		// Process Clients.
+		// Process Client.
+		SOCKET clientSocket;
+		sockaddr_in clientAddress;
+		int clientAddressSize = sizeof(sockaddr_in);
+		clientSocket = accept(mainSocket, (SOCKADDR*)&clientAddress, &clientAddressSize);
+
+		char buffer[MESSAGE_SIZE];
+		MessageRPSConnect *conn = nullptr;
+		do
+		{
+			std::cout << "Waiting for clients..." << std::endl;
+			char buffer[MESSAGE_SIZE];
+			ret = recv(mainSocket, buffer, MESSAGE_SIZE, 0);
+			conn = (MessageRPSConnect*)buffer;
+			if (!conn) std::cout << "Received an invalid package." << std::endl;
+			else if (conn->type != MessageType::MESSAGE_RPS_CONNECT) std::cout << "Received package with an invalid type." << std::endl;
+		} while (!conn || conn->type != MessageType::MESSAGE_RPS_CONNECT);
+
 		// Reply Clients.
 	}
 
